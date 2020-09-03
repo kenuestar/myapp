@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>证书确权</title>
+<script src="/javascripts/jquery.js"></script>
+</head>
+<body>
+	<form id="form" method="POST">
+		<div>
+			<label>名称：</label>	
+			<input id="name" name="name" type="text" />
+			</br>
+			<label>类型：</label>
+			<select id="type" name="type" />
+				<option value="论文">论文</option>
+				<option value="专利">专利</option>		
+			</select>
+			</br>
+			<label>版本：</label>
+			<input id="version" name="version"/>
+			</br>
+			<label>文件内容：</label>
+			<textarea rows="4" id="content" name="content"/>
+			</textarea>
+			</br>
+			<input id="file" name="file" accept=".xml"  type="file" value="上传文件" />
+			</br>
+			<div>
+				<input type="submit" value="确权" />
+				<input type="reset" value="重置" />
+			</div>
+		</div>
+	</form>
+<script type="text/javascript">
+$('#form').on('submit', function() {
+	let formData = new FormData();
+	formData.append('name',$('#name').val());
+	formData.append('type',$('#type option:selected').val());
+	formData.append('version',$('#version').val());
+	formData.append('content',$('#content').val());
+	formData.append('file',$('#file')[0].files[0]);
+	$.ajax({
+		type:"POST",
+		url:"/data_makeBy",
+		data:formData,
+		cache: false,
+		processData: false,
+		contentType: false,
+		success: function() {
+
+		},
+		error: function() {
+			alert("确权失败")
+		}
+	})
+
+})
+</script>
+
+</body>
+</html>
